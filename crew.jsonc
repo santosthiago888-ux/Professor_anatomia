@@ -1,0 +1,58 @@
+{
+  // Display name for this crew
+  "name": "projeto_professor_anatomia",
+
+  // Agents to include — each must have a matching agents/<name>.jsonc file
+  "agents": ["professor_de_anatomia", "escritor"],
+
+  // Task definitions — executed in order for sequential process
+  "tasks": [
+    {
+      // Task identifier
+      "name": "responda_de_forma_completa_task",
+
+      // What the task should accomplish
+      // Use {placeholder} inputs here; crewai run prompts for missing values
+      "description": "Analise tecnicamente a seguinte pergunta ou tema de Anatomia Animal: '{pergunta}'. Detalhe a morfologia, a topografia, a vascularização/inervação, as correlações funcionais e as principais diferenças comparadas entre as espécies domésticas (equinos, ruminantes, suínos, carnívoros e aves), utilizando rigorosamente a Nomina Anatomica Veterinaria (NAV).",
+
+      // Clear definition of what the output should look like
+      "expected_output": "Um dossiê técnico completo, preciso e estruturado sobre '{pergunta}', contendo nomenclatura anatômica oficial (NAV), relações topográficas, funções e variações relevantes entre espécies domésticas.",
+
+      // Which agent handles this task
+      "agent": "professor_de_anatomia"
+    },
+    {
+      // Task identifier
+      "name": "com_base_na_explicao_task",
+
+      // What the task should accomplish
+      // Use {placeholder} inputs here; crewai run prompts for missing values
+      "description": "Com base no dossiê técnico fornecido pelo Professor de Anatomia sobre '{pergunta}', redija um guia de estudo claro, didático e altamente escaneável. Preserve todos os termos anatômicos oficiais (NAV) em negrito, explique conceitos densos com analogias simples, organize as diferenças entre espécies em tabelas comparativas quando aplicável e finalize com um resumo de fixação.",
+
+      // Clear definition of what the output should look like
+      "expected_output": "Um guia de estudo completo e bem formatado em Markdown (sem blocos de código cercados por crases) contendo título, introdução acessível, seções organizadas com tópicos, tabela comparativa entre espécies (quando pertinente) e resumo final de revisão sobre '{pergunta}'.",
+
+      // Enforce native Markdown formatting in CrewAI
+      "markdown": true,
+
+      // Which agent handles this task
+      "agent": "escritor",
+
+      // Task outputs used as context
+      "context": ["responda_de_forma_completa_task"]
+    }
+  ],
+
+  // Execution process
+  "process": "sequential",
+
+  // Enable verbose logging during execution
+  "verbose": true,
+
+  // Enable crew memory — persists context and learnings across tasks
+  "memory": false,
+
+  // Optional runtime input defaults.
+  // `crewai run` prompts for any placeholders missing from this object.
+  "inputs": {}
+}
